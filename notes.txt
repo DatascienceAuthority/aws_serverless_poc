@@ -21,3 +21,4 @@ cloudformation - create stack
 cloudwatch - loggroups
 
 
+curl -X POST -d "{\"Iris\":{\"sepal_length\":\"5.1\",\"sepal_width\":\"1.5\",\"petal_length\":\"3.4\",\"petal_width\":\"0.5\"}}" https://pqyotplcii.execute-api.us-east-1.amazonaws.com/Production/
