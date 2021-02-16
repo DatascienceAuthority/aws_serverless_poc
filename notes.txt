@@ -1,0 +1,23 @@
+template.json changes
+line 8, 13 , 18, 
+
+mlbuild - line 146 to 337, 
+
+
+create demo folder for inference.zip
+
+line 535 to 671 ------ layers
+
+line 728 to 742 inference layers
+
+line 743 - future change
+
+line 770 - 779 
+
+
+cloudformation - create stack
+
+
+cloudwatch - loggroups
+
+

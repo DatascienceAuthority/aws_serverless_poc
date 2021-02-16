@@ -30,7 +30,7 @@ f.close()
 
 model = pickle.load(open('model.pkl', 'rb'))
 
-def handler(event, context):
+def lambda_handler(event, context):
     # Info
     sepal_length = float(event.get('Iris')['sepal_length'])
     sepal_width = float(event.get('Iris')['sepal_width'])
