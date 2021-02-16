@@ -1,7 +1,7 @@
-import boto3
-import os
-import ctypes
-import uuid
+#import boto3
+#import os
+#import ctypes
+#import uuid
 import sklearn
 import pickle
 import numpy as np

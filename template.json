@@ -5,7 +5,7 @@
     "Parameters": {
         "BuildCode": {
             "Type": "String",
-            "Default": "https://github.com/aws-samples/serverless-machine-learning-on-aws",
+            "Default": "https://github.com/DatascienceAuthority/aws_serverless_poc",
             "Description": "Enter the Github repo that contains the buildspec.yaml for CodeBuild to create Lambda Layers."
         },
         "InferenceCode": {
@@ -15,7 +15,7 @@
         },
         "FrontendCode": {
             "Type": "String",
-            "Default": "https://github.com/aws-samples/serverless-machine-learning-on-aws/raw/master/demo/frontend.html",
+            "Default": "https://raw.githubusercontent.com/DatascienceAuthority/aws_serverless_poc/master/frontend.html",
             "Description": "Enter a URL for the static frontend code."
         }
     },
