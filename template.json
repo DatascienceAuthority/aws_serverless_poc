@@ -168,162 +168,16 @@
             "Type": "AWS::CodeBuild::Project",
             "Properties": {
                 "Artifacts": {
-                    "ArtifactIdentifier": "mxnet",
+                    "ArtifactIdentifier": "sklearn",
                     "Location": {
                         "Ref": "LambdaLayerBucket"
                     },
-                    "Name": "mxnet.zip",
+                    "Name": "sklearn.zip",
                     "NamespaceType": "NONE",
                     "Packaging": "ZIP",
                     "Path": "layers/",
                     "Type": "S3"
                 },
-                "SecondaryArtifacts": [
-                    {
-                        "ArtifactIdentifier": "keras",
-                        "Location": {
-                            "Fn::Select": [
-                                "1",
-                                {
-                                    "Fn::Split": [
-                                        ":::",
-                                        {
-                                            "Fn::GetAtt": [
-                                                "LambdaLayerBucket",
-                                                "Arn"
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        "Name": "keras.zip",
-                        "NamespaceType": "NONE",
-                        "Packaging": "ZIP",
-                        "Path": "layers/",
-                        "Type": "S3"
-                    },
-                    {
-                        "ArtifactIdentifier": "pillow",
-                        "Location": {
-                            "Fn::Select": [
-                                "1",
-                                {
-                                    "Fn::Split": [
-                                        ":::",
-                                        {
-                                            "Fn::GetAtt": [
-                                                "LambdaLayerBucket",
-                                                "Arn"
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        "Name": "pillow.zip",
-                        "NamespaceType": "NONE",
-                        "Packaging": "ZIP",
-                        "Path": "layers/",
-                        "Type": "S3"
-                    },
-                    {
-                        "ArtifactIdentifier": "scipy",
-                        "Location": {
-                            "Fn::Select": [
-                                "1",
-                                {
-                                    "Fn::Split": [
-                                        ":::",
-                                        {
-                                            "Fn::GetAtt": [
-                                                "LambdaLayerBucket",
-                                                "Arn"
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        "Name": "scipy.zip",
-                        "NamespaceType": "NONE",
-                        "Packaging": "ZIP",
-                        "Path": "layers/",
-                        "Type": "S3"
-                    },
-                    {
-                        "ArtifactIdentifier": "gluonnlp",
-                        "Location": {
-                            "Fn::Select": [
-                                "1",
-                                {
-                                    "Fn::Split": [
-                                        ":::",
-                                        {
-                                            "Fn::GetAtt": [
-                                                "LambdaLayerBucket",
-                                                "Arn"
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        "Name": "gluonnlp.zip",
-                        "NamespaceType": "NONE",
-                        "Packaging": "ZIP",
-                        "Path": "layers/",
-                        "Type": "S3"
-                    },
-                    {
-                        "ArtifactIdentifier": "gluoncv",
-                        "Location": {
-                            "Fn::Select": [
-                                "1",
-                                {
-                                    "Fn::Split": [
-                                        ":::",
-                                        {
-                                            "Fn::GetAtt": [
-                                                "LambdaLayerBucket",
-                                                "Arn"
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        "Name": "gluoncv.zip",
-                        "NamespaceType": "NONE",
-                        "Packaging": "ZIP",
-                        "Path": "layers/",
-                        "Type": "S3"
-                    },
-                    {
-                        "ArtifactIdentifier": "sklearn",
-                        "Location": {
-                            "Fn::Select": [
-                                "1",
-                                {
-                                    "Fn::Split": [
-                                        ":::",
-                                        {
-                                            "Fn::GetAtt": [
-                                                "LambdaLayerBucket",
-                                                "Arn"
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        "Name": "sklearn.zip",
-                        "NamespaceType": "NONE",
-                        "Packaging": "ZIP",
-                        "Path": "layers/",
-                        "Type": "S3"
-                    }
-                ],
                 "Description": "Build zipped Lambda Layer packages for machine learning.",
                 "Environment": {
                     "ComputeType": "BUILD_GENERAL1_SMALL",
@@ -557,120 +411,6 @@
                 }
             }
         },
-        "MXNetLayer": {
-            "Type": "AWS::Lambda::LayerVersion",
-            "Properties": {
-                "CompatibleRuntimes": [
-                    "python3.7"
-                ],
-                "Content": {
-                    "S3Bucket": {
-                        "Ref": "LambdaLayerBucket"
-                    },
-                    "S3Key": "layers/mxnet.zip"
-                },
-                "Description": "Lambda layer for the MXNet",
-                "LayerName": "MXNet"
-            },
-            "DependsOn": [
-                "BuiltS3"
-            ]
-        },
-        "GluonCVLayer": {
-            "Type": "AWS::Lambda::LayerVersion",
-            "Properties": {
-                "CompatibleRuntimes": [
-                    "python3.7"
-                ],
-                "Content": {
-                    "S3Bucket": {
-                        "Ref": "LambdaLayerBucket"
-                    },
-                    "S3Key": "layers/gluoncv.zip"
-                },
-                "Description": "Gluon computer vision extension to MXNet",
-                "LayerName": "GluonCV"
-            },
-            "DependsOn": [
-                "BuiltS3"
-            ]
-        },
-        "GluonNLPLayer": {
-            "Type": "AWS::Lambda::LayerVersion",
-            "Properties": {
-                "CompatibleRuntimes": [
-                    "python3.7"
-                ],
-                "Content": {
-                    "S3Bucket": {
-                        "Ref": "LambdaLayerBucket"
-                    },
-                    "S3Key": "layers/gluonnlp.zip"
-                },
-                "Description": "Gluon natural language processing extension to MXNet",
-                "LayerName": "GluonNLP"
-            },
-            "DependsOn": [
-                "BuiltS3"
-            ]
-        },
-        "MXNetKerasLayer": {
-            "Type": "AWS::Lambda::LayerVersion",
-            "Properties": {
-                "CompatibleRuntimes": [
-                    "python3.7"
-                ],
-                "Content": {
-                    "S3Bucket": {
-                        "Ref": "LambdaLayerBucket"
-                    },
-                    "S3Key": "layers/keras.zip"
-                },
-                "Description": "Keras extension to MXNet",
-                "LayerName": "MXNetKeras"
-            },
-            "DependsOn": [
-                "BuiltS3"
-            ]
-        },
-        "PillowLayer": {
-            "Type": "AWS::Lambda::LayerVersion",
-            "Properties": {
-                "CompatibleRuntimes": [
-                    "python3.7"
-                ],
-                "Content": {
-                    "S3Bucket": {
-                        "Ref": "LambdaLayerBucket"
-                    },
-                    "S3Key": "layers/pillow.zip"
-                },
-                "Description": "Lambda layer for the Pillow image processing",
-                "LayerName": "Pillow"
-            },
-            "DependsOn": [
-                "BuiltS3"
-            ]
-        },
-        "SciPyLayer": {
-            "Type": "AWS::Lambda::LayerVersion",
-            "Properties": {
-                "CompatibleRuntimes": [
-                    "python3.7"
-                ],
-                "Content": {
-                    "S3Bucket": {
-                        "Ref": "LambdaLayerBucket"
-                    },
-                    "S3Key": "layers/scipy.zip"
-                },
-                "Description": "Lambda layer for the scipy scientific computation library",
-                "LayerName": "SciPy"
-            },
-            "DependsOn": [
-                "BuiltS3"
-            ]
-        },
         "SKLearnLayer": {
             "Type": "AWS::Lambda::LayerVersion",
             "Properties": {
@@ -748,16 +488,7 @@
                 },
                 "Layers": [
                     {
-                        "Ref": "MXNetLayer"
-                    },
-                    {
-                        "Ref": "SciPyLayer"
-                    },
-                    {
-                        "Ref": "PillowLayer"
-                    },
-                    {
-                        "Ref": "GluonCVLayer"
+                        "Ref": "SKLearnLayer"
                     }
                     
                 ],
