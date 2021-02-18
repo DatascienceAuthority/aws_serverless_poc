@@ -11,13 +11,20 @@
                 .form-control {max-width: 500px; margin: auto}
                 #input {margin: auto}
         </style>
-        <title>MXNet Sentiment Analysis</title>
+        <title>Iris Flower Classification</title>
     </head>
     <body>
-    <h1>MXNet Sentiment Analysis</h1>
+    <h1>Iris Flower Classification</h1>
+    <br>
     <div class="form-group">
-        <label>Input text to be analyzed:</label>
-        <input type="url" class="form-control" id="input" value="I love serverless machine learning">
+        <label>Sepal Length</label>
+        <input type="text" style="width:10em;text-align:center" class="form-control" id="sepal_length" value="5.1">
+        <label>Sepal Width</label>
+        <input type="text" style="width:10em;text-align:center" class="form-control" id="sepal_width" value="3.5">
+        <label>Petal Length</label>
+        <input type="text" style="width:10em;text-align:center" class="form-control" id="petal_length" value="1.4">
+        <label>Petal Width</label>
+        <input type="text" style="width:10em;text-align:center" class="form-control" id="petal_width" value="0.2">
         <button type="submit" class="btn btn-primary"  style='margin-top:6pt' onclick='submit()'>Submit</button>
     </div>
     <div id='response'>
@@ -25,25 +32,37 @@
     <script type="text/Javascript">
         function submit() {
             pred = document.getElementById("response")
-            var input = document.getElementById("input").value
+            var sepal_length = document.getElementById("sepal_length").value
+            var sepal_width = document.getElementById("sepal_width").value
+            var petal_length = document.getElementById("petal_length").value
+            var petal_width = document.getElementById("petal_width").value
+            Iris = {
+                'sepal_length': sepal_length,
+                'sepal_width': sepal_width,
+                'petal_length': petal_length,
+                'petal_width': petal_width
+            }
             pred.innerHTML = "<h2>Loading...</h2>";
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 400) { pred.innerHTML = "<h2>Please input valid text</h2>"; } 
-                    else if (xhr.status === 200) { pred.innerHTML = xhr.response; } 
+                    else if (xhr.status === 200) {
+                        classes = ['Setosa', 'Versicolor', 'Virginica']
+                        pred.innerHTML = "<h2>Species: "+ classes[parseInt(xhr.response)] + "</h2>";
+                    }
                     else { pred.innerHTML = "<h2>Error</h2>"; }
                 }
             }
 
-            xhr.open("POST", 'API_GATEWAY_ENDPOINT_URL', true);
+            xhr.open("POST", 'https://ghx67h36mk.execute-api.us-east-1.amazonaws.com/Production/', true);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(JSON.stringify({
-                text: input
+                Iris: Iris
             }));
         }
         submit();
-        document.getElementById('input').onkeydown = function(e){
+        document.getElementById('petal_width').onkeydown = function(e){
             if(e.keyCode == 13){
                 submit()
             }
